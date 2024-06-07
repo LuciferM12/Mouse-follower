@@ -15,9 +15,22 @@ const FollowMouse = () =>{
       window.addEventListener('pointermove', handleMove)
     }
     
-    //Se va a ejecutar cuando el componente deje de renderizarse
+    //Se va a ejecutar cuando el componente se desmonta
+    //cuando cambian las dependencias antes de ejecutar el efecto de nuevo
     return () => {
       window.removeEventListener('pointermove', handleMove)
+    }
+    
+  }, [enabled])
+
+  //[] => solo se ejecuta una vez cuando se monta en el componente
+  //[enabled] => se ejecuta cuando cambia el enabled y cuando se monta el componente
+  //undefined => se ejecuta cada vez que se renderiza el componente
+
+  useEffect (()=> {
+    document.body.classList.toggle('no-cursor', enabled)
+    return () => {
+      document.body.classList.remove('no-cursor')
     }
     
   }, [enabled])
